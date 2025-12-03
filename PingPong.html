@@ -1,0 +1,123 @@
+<title>PingPong</title>
+<html>
+  <body>
+
+    
+
+    <canvas id="folha" width="600" height="500" > </canvas>
+
+    <script>
+      window,onload = function(){
+        setInterval(executar, 100/3);
+      }
+
+      var folhaDesenho = document.getElementById("folha");
+      var areaDesenho = folhaDesenho.getContext("2d");
+
+      var larguraCampo = 600;
+      var alturaCampo = 500;
+      var larguraLinha = 5;
+      var larguraBola = 10;
+      var alturaRaquete = 70;
+      var efeitoRaquete = 0.3;
+      var velocidadeJogador2 = 1;
+
+      var posicaoBolaX = 10;
+      var posicaoBolaY = 10;
+      var velocidadeBolaX = velocidadeBolaY = 5;
+      var posicaojogador1 = posicaojogador2 = 40
+      var espessuraraquete = 11;
+      var alturaRaquete = 100;
+      var pontuacaoJogador1 = pontuacaoJogador2 = 0;
+
+      folhaDesenho.addEventListener('mousemove', function(e){
+          posicaojogador1 = e.clientY - alturaRaquete / 2;
+      })
+      
+      function executar(){
+
+        areaDesenho.fillStyle = '#0f5c03';
+        areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo);
+
+        //rede
+        areaDesenho.fillStyle = '#ffffff';
+        areaDesenho.fillRect(larguraCampo/2 - larguraLinha/2, 0, 5, 500);
+
+        //raquetes
+        areaDesenho.fillRect(0, posicaojogador1, espessuraraquete, alturaRaquete);
+        areaDesenho.fillRect(larguraCampo - espessuraraquete, posicaojogador2, espessuraraquete, alturaRaquete);
+
+        areaDesenho.fillText("Player - " + pontuacaoJogador1 + " points", 100, 100);
+        areaDesenho.fillText("Bot - " + pontuacaoJogador2 + " points", larguraCampo - 200, 100);
+
+        //bola quadrada
+        areaDesenho.fillRect(posicaoBolaX - larguraBola/2, posicaoBolaY - larguraBola/2, larguraBola, larguraBola);
+
+        posicaoBolaX += velocidadeBolaX;
+        posicaoBolaY += velocidadeBolaY;
+
+        //verifica lateral superior
+        if(posicaoBolaY < 0 && velocidadeBolaY < 0) {
+          velocidadeBolaY = -velocidadeBolaY;
+        }
+        //verifica lateral inferior
+        if(posicaoBolaY > alturaCampo && velocidadeBolaY > 0) {
+          velocidadeBolaY = -velocidadeBolaY;
+        }
+
+        //verifica pontuacao do jogador 2
+        if(posicaoBolaX < 0){
+          if(posicaoBolaY > posicaojogador1 && posicaoBolaY < posicaojogador1 + alturaRaquete){
+            //rebater a bola
+            velocidadeBolaX = - velocidadeBolaX;
+
+            var diferencaY = posicaoBolaY - (posicaojogador1 + alturaRaquete / 2);
+            velocidadeBolaY = diferencaY *efeitoRaquete;
+          }else{
+            //pontuacao do jogador 2
+            pontuacaoJogador2++;
+            //colocar a bola no centro
+            posicaoBolaX = larguraCampo/2;
+            posicaoBolaY = alturaCampo/2;
+            velocidadeBolaX = -velocidadeBolaX
+            velocidadeBolaY = 3
+          }
+        }
+
+        //verfica pontuacao do jogador 1
+        if(posicaoBolaX > larguraCampo){
+          if(posicaoBolaY > posicaojogador2 && posicaoBolaY < posicaojogador2 + alturaRaquete){
+            //rebater a bola
+            velocidadeBolaX = -velocidadeBolaX;
+
+            var diferencaY = posicaoBolaY - (posicaojogador2 + alturaRaquete / 2);
+            velocidadeBolaY = diferencaY *efeitoRaquete;
+          }else{
+            //pontuacao do jogador 1
+            pontuacaoJogador1++;
+            //colocar a bola no centro
+            posicaoBolaX = larguraCampo/2;
+            posicaoBolaY = alturaCampo/2;
+            velocidadeBolaX = -velocidadeBolaX
+            velocidadeBolaY = 3
+          }
+        }
+
+        // atualiza a posicao da raquete do bot
+        if(posicaojogador2 + alturaRaquete / 2 < posicaoBolaY){
+          posicaojogador2 = posicaojogador2 + velocidadeJogador2;
+
+        }else{
+          posicaojogador2 = posicaojogador2 - velocidadeJogador2;
+
+        }
+
+      }
+
+    </script>
+
+    
+
+  </body>
+
+</html>
