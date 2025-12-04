@@ -1,6 +1,8 @@
 # PingPong Game
- <p1>This is my first JavaScript code ever.</p>
- It was done based on my studies on DevSamurai and I'm really proud of it!:)
+ <p>This is my first JavaScript code ever.</p>
+ <p></p>It was done based on my studies on DevSamurai and I'm really proud of it!:)</p>
+
+<p>You can play it on this link: https://damataalex.github.io/PingPong.</p>
 
  <div style="display: inline_block"><br>
   
